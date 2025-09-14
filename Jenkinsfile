@@ -65,11 +65,17 @@ pipeline {
       steps {
         script {
           sh '''
-            set -e
-            export AWS_DEFAULT_REGION=${AWS_REGION}
+          set -e
+          export AWS_DEFAULT_REGION=${AWS_REGION}
 
-            echo "Forcing new deployment for service ${ECS_SERVICE} in cluster ${ECS_CLUSTER}"
-            aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment
+          echo "Preparing task definition with new image: ${IMAGE_URI}"
+          sed "s|REPLACABLE_URL|${IMAGE_URI}|g" taskdef.json > taskdef-rendered.json
+
+          echo "Registering new task definition..."
+          aws ecs register-task-definition --cli-input-json file://taskdef-rendered.json
+
+          echo "Updating service ${ECS_SERVICE} in cluster ${ECS_CLUSTER}"
+          aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --force-new-deployment
           '''
         }
       }
