@@ -8,7 +8,7 @@
   "containerDefinitions": [
     {
       "name": "devops-task",
-      "image": "REPLACABLE_URL",
+      "image": "624564777830.dkr.ecr.ap-south-1.amazonaws.com/devops-task:latest",
       "portMappings": [
         {
           "containerPort": 3000,
