@@ -45,6 +45,11 @@ The pipeline is defined in a `Jenkinsfile` and is triggered by a webhook from a 
 ## 5. Future Scopes
 
 Given more time and resources, this project could be enhanced in several key areas to improve its robustness, security, and developer experience:
+* **Git Branching Strategy:** Implement a structured Git branching model (e.g., GitFlow or GitHub Flow). This would involve:
+    * **`dev` branch:** For ongoing development and feature work. Commits to `dev` could trigger deployments to a development/testing environment.
+    * **`main` branch:** Kept clean and stable, representing the current production-ready code. Merges into `main` would trigger deployments to a staging or production environment after thorough testing.
+    * **`release` branches:** Created for specific release cycles, allowing for final bug fixes and testing before merging into `main` and deploying to production.
+    _While not implemented in this demo due to time constraints, adopting such a strategy is crucial for managing concurrent development, ensuring code quality, and facilitating controlled releases in a team environment._
 
 * **Infrastructure as Code (IaC) for AWS Resources:** Implement IaC tools like Terraform or AWS CloudFormation to manage all AWS resources (ECS Cluster, ECR Repository, IAM Roles, Security Groups, Load Balancers, CloudWatch Alarms/Dashboards) instead of manual provisioning. This ensures environments are consistent and reproducible.
 * **Automated Testing:** Integrate more comprehensive automated testing into the Jenkins pipeline:
